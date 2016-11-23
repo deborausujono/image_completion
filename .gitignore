@@ -1,0 +1,8 @@
+*.swp
+*.pyc
+.env/*
+plots/
+datasets/cifar-10-batches-py
+.DS_Store
+.idea/
+.ipynb_checkpoints/
