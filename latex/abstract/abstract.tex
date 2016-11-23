@@ -1,0 +1,67 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.75in,bottom=0.75in,left=1.0in,right=1.0in]{geometry}
+\usepackage{datetime}
+\usepackage{hyperref}
+
+\title{
+  \textbf{Lamprey Recognition} \\
+  \Large{CMPSCI 697L, Fall 2016, UMass Amherst} \\
+  \author{Debora Sujono, Yue Tang, Grace Yoo}
+}
+
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Objective}
+Lamprey are an invasive species that must be physically blocked from entering bodies of water in order to preserve ecological well-being. Currently, humans who are trained to recognize lamprey manually operate trap doors through which they allow only non-lamprey to pass. If machines replace humans in these rote, time-consuming tasks, the humans will be afforded time and energy that can be spent on meaningful, high-level environmental protection efforts. Our objective is to build a lamprey recognition pipeline that can detect shapes in images, extract features from them, and determine if it is a lamprey or not. We will experiment with a variety of pre-processing, feature extraction/pooling, and classification methods.
+
+\section{Data}
+Since the context in which we recognize lamprey will include other marine creatures, we should construct a dataset where positive labels are lamprey and negative labels are images of animals we'd like to allow through the trapdoor.\\
+
+\noindent ImageNet \cite{imagenet}
+\subitem synset "lamprey, lamprey eel, lamper eel" contains 968 images of lamprey
+\subitem synset "sea lamprey, Petromyzon marinus" contains 670 images of lamprey
+\subitem synset "fish" contains 1307 images
+\subitem synset "amphibian" contains 1237 images
+
+
+\section{Approach}
+We are going to experiment with different binary classifiers, all implemented as convolutional neural networks. Each CNN will have input, convolution, ReLU, Pooling, and Fully-Connected layers. We will do some pre-processing of the input layer to make the scores invariant to scaling, translation or rotation, such as normalizing images to remove brightness effects, etc. 
+ 
+\begin{itemize}
+\item convolution layer/feature extraction options
+\subitem try convolving image with different filters to extract different features such as: Euclidean distances of pixels from non-lamprey images, Hedges, corners, Gabor features, NMF (non-negative matrix factorization) features
+\subitem adjust local connectivity and spatial connectivity params
+\subitem try switching layers between convolutional and fully-connected settings and compare performance
+\item pooling layer options
+\subitem adjust spatial extent and stride
+\subitem try different functions for pooling, such as Max, L2-norm, or region pooling 
+\item classifier options 
+\subitem SVM, softmax, logistic regression
+\end{itemize}
+
+\section{Division of Work}
+All three of us will work on data pre-processing, until we are satisfied with our dataset. Then, we will split up the rest of the tasks evenly. We will each build a CNN of the same architecture (same order/number of layers), but the layers will use different methods for feature extraction, feature pooling, and scoring. After experimentation, we will compare our results and recombine components of our CNNs to build an optimal one. \\
+
+\noindent Debora's initial pipeline will include
+\subitem feature extraction: NMF/local NMF, PCA filtered pixel intensities
+\subitem classifiers: logistic with softmax loss \\
+
+\noindent Yue's initial pipeline will include
+\subitem feature extraction: Euclidean distances of pixel values, edges, corners
+\subitem classifiers: SVM with hinge loss or smooth SVM \\
+
+\noindent Grace's initial pipeline will include
+\subitem feature extraction: Gaber filters, feature point detection, histogram features
+\subitem classifiers: SVM with Lorenz loss \\
+
+\
+\begin{thebibliography}{1}
+\bibitem{imagenet} ImageNet Database \url{http://image-net.org/synset?wnid=n01477875}
+\bibitem{svms} Deep Learning using Linear SVMs \url{http://deeplearning.net/wp-content/uploads/2013/03/dlsvm.pdf}
+\bibitem{costfxns} An Analysis of Robust Cost Functions for CNN in Computer-Aided Diagnosis \url{http://stat.fsu.edu/~abarbu/papers/2016-CostFun-CMBBE.pdf}
+\end{thebibliography}
+
+\end{document}

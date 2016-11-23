@@ -6,3 +6,9 @@ datasets/cifar-10-batches-py
 .DS_Store
 .idea/
 .ipynb_checkpoints/
+
+*.pdf
+*.log
+*.aux
+*.txt
+*.synctex.gz
