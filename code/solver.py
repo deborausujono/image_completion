@@ -1,6 +1,6 @@
 import numpy as np
 
-from asgn2 import optim
+from code import optim
 
 
 class Solver(object):

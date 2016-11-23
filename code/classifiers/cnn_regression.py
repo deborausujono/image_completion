@@ -1,8 +1,8 @@
 import numpy as np
 
-from asgn2.layers import *
-from asgn2.fast_layers import *
-from asgn2.layer_utils import *
+from code.layers import *
+from code.fast_layers import *
+from code.layer_utils import *
 
 
 class ThreeLayerConvNetRegression(object):

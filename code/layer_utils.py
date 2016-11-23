@@ -1,5 +1,5 @@
-from asgn2.layers import *
-from asgn2.fast_layers import *
+from code.layers import *
+from code.fast_layers import *
 
 
 def affine_relu_forward(x, w, b):

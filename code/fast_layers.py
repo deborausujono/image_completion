@@ -1,13 +1,13 @@
 import numpy as np
 try:
-  from asgn2.im2col_cython import col2im_cython, im2col_cython
-  from asgn2.im2col_cython import col2im_6d_cython
+  from code.im2col_cython import col2im_cython, im2col_cython
+  from code.im2col_cython import col2im_6d_cython
 except ImportError:
-  print 'run the following from the asgn2 directory and try again:'
+  print 'run the following from the code directory and try again:'
   print 'python setup.py build_ext --inplace'
   print 'You may also need to restart your iPython kernel'
 
-from asgn2.im2col import *
+from code.im2col import *
 
 
 def conv_forward_im2col(x, w, b, conv_param):
