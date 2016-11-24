@@ -96,7 +96,7 @@ For both GAN and DCGAN implementations, we will start with an existing one from 
  \url{https://bamos.github.io/2016/08/09/deep-completion/#existing-gan-and-dcgan-implementations}.
 
 \subsection{Pixel Recurrent Neural Networks}
-Recurrent Neural Networks (RNNs) solve the problem of efficiently modeling the joint distribution of pixels in the image by treating it as a product of conditional distributions. This converts the problem into a sequence problem, and the task becomes to predict the next pixel given the previously generated ones\cite{pixelRNN}. 
+Recurrent Neural Networks (RNNs) solve the problem of efficiently modeling the joint distribution of pixels in the image by treating it as a product of conditional distributions. This converts the problem into a sequence problem, and the task becomes to predict the next pixel given the previously generated ones \cite{pixelRNN}. 
 
 Let $p(x)$ be the generated distribution for image $x$ with dimensions [$n$ x $n$], represented as a row of length $n^2$. We approximate $p(x)$ by: \\
 $p(x) = \prod_{i=1}^{n^2} p(x_i | x_1, ... , x_{i-1} )$
@@ -128,8 +128,8 @@ This is not the final architecture we will use, we just decided to start with th
 We then trained the network for 1 epoch and achieved training RMSE of 120.323 and validation RMSE of 153.462. Our network is currently overfit, and since the values of the data range from 0.0 - 255.0, these RMSE values are quite high. We expect high RMSE because this is just the baseline network, but we are currently checking to make sure there aren't other issues causing such a high RMSE.
 
 \begin{thebibliography}{1}
-\bibitem{image_gen} Conditional Image Generation with PixelCNN Decoders \url{https://arxiv.org/pdf/1606.05328v2.pdf}
-\bibitem{pix_net} Pixel Recurrent Neural Networks \url{https://arxiv.org/pdf/1601.06759v3}
+\bibitem{pixelRNN} Conditional Image Generation with PixelCNN Decoders \url{https://arxiv.org/pdf/1606.05328v2.pdf}
+\bibitem{pixelRNN} Pixel Recurrent Neural Networks \url{https://arxiv.org/pdf/1601.06759v3}
 \bibitem{GAN} Generative Adversarial Nets \url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
 \bibitem{DCGAN} Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks \url{https://arxiv.org/pdf/1511.06434v2}
 \bibitem{inpaint} Semantic Image Inpainting with Perceptual and Contextual Losses \url{https://arxiv.org/pdf/1607.07539v2.pdf}
