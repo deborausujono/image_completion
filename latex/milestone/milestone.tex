@@ -6,14 +6,12 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{amssymb}
-
 % Include other packages here, before hyperref.
-
+%\usepackage{natbib}
 % If you comment hyperref and then uncomment it, you should delete
 % egpaper.aux before re-running latex.  (Or just hit 'q' on the first latex
 % run, let it finish, and you should be clear).
 \usepackage[pagebackref=true,breaklinks=true,letterpaper=true,colorlinks,bookmarks=false]{hyperref}
-
 \cvprfinalcopy % *** Uncomment this line for the final submission
 
 \def\cvprPaperID{****} % *** Enter the CVPR Paper ID here
@@ -23,6 +21,7 @@
 %\ifcvprfinal\pagestyle{empty}\fi
 
 \graphicspath{{../figs/}}
+
 
 \begin{document}
 
@@ -97,19 +96,17 @@ For both GAN and DCGAN implementations, we will start with an existing one from 
  \url{https://bamos.github.io/2016/08/09/deep-completion/#existing-gan-and-dcgan-implementations}.
 
 \subsection{Pixel Recurrent Neural Networks}
-Recurrent Neural Networks (RNNs) solve the problem of efficiently modeling the joint distribution of pixels in the image by treating it as a product of conditional distributions. This converts the problem into a sequence problem, and the task becomes to predict the next pixel given the previously generated ones. 
+Recurrent Neural Networks (RNNs) solve the problem of efficiently modeling the joint distribution of pixels in the image by treating it as a product of conditional distributions. This converts the problem into a sequence problem, and the task becomes to predict the next pixel given the previously generated ones\cite{pixelRNN}. 
 
 Let $p(x)$ be the generated distribution for image $x$ with dimensions [$n$ x $n$], represented as a row of length $n^2$. We approximate $p(x)$ by: \\
 $p(x) = \prod_{i=1}^{n^2} p(x_i | x_1, ... , x_{i-1} )$
 
-Pixel CNN is like Pixel RNN, but uses convolutional layers to cut computational costs. We will use the TensorFlow implementations for Pixel RNN and Pixel CNN. \url{https://github.com/carpedm20/pixel-rnn-tensorflow}
+Pixel CNN is like Pixel RNN, but uses convolutional layers to cut computational costs \cite{pixelCNN}. We will use the TensorFlow implementations for Pixel RNN and Pixel CNN. \url{https://github.com/carpedm20/pixel-rnn-tensorflow}
 
 \subsection{Image completion with perceptual and contextual losses}
 
 \section{Preliminary Results}
 %Intermediate/Preliminary Results: State and evaluate your results upto the milestone
-
-
 We have implemented a 3-layer CNN with regression using the following architecture: 
 %$Convolutional \rightarrow ReLU \rightarrow 2x2 Max pooling \rightarrow affine \rightarrow ReLU \rightarrow affine \rightarrow MSE$
 
@@ -130,20 +127,19 @@ This is not the final architecture we will use, we just decided to start with th
 
 We then trained the network for 1 epoch and achieved training RMSE of 120.323 and validation RMSE of 153.462. Our network is currently overfit, and since the values of the data range from 0.0 - 255.0, these RMSE values are quite high. We expect high RMSE because this is just the baseline network, but we are currently checking to make sure there aren't other issues causing such a high RMSE.
 
-\subsection{References}
+\begin{thebibliography}{1}
+\bibitem{image_gen} Conditional Image Generation with PixelCNN Decoders \url{https://arxiv.org/pdf/1606.05328v2.pdf}
+\bibitem{pix_net} Pixel Recurrent Neural Networks \url{https://arxiv.org/pdf/1601.06759v3}
+\bibitem{GAN} Generative Adversarial Nets \url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
+\bibitem{DCGAN} Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks \url{https://arxiv.org/pdf/1511.06434v2}
+\bibitem{inpaint} Semantic Image Inpainting with Perceptual and Contextual Losses \url{https://arxiv.org/pdf/1607.07539v2.pdf}
+\end{thebibliography}
 
-{\small
-\bibliographystyle{ieee}
+%
+\bibliographystyle{unsrtnat}
 \bibliography{milestone}
-}
 
-%\begin{thebibliography}{1}
-%\bibitem{image_gen} Conditional Image Generation with PixelCNN Decoders \url{https://arxiv.org/pdf/1606.05328v2.pdf}
-%\bibitem{pix_net} Pixel Recurrent Neural Networks \url{https://arxiv.org/pdf/1601.06759v3}
-%\bibitem{GAN} Generative Adversarial Nets \url{http://papers.nips.cc/paper/5423-generative-adversarial-nets.pdf}
-%\bibitem{DCGAN} Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks \url{https://arxiv.org/pdf/1511.06434v2}
-%\bibitem{inpaint} Semantic Image Inpainting with Perceptual and Contextual Losses \url{https://arxiv.org/pdf/1607.07539v2.pdf}
-%\end{thebibliography}
+
 
 
 \end{document}
