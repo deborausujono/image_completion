@@ -208,6 +208,7 @@ class Solver(object):
       start = i * batch_size
       end = (i + 1) * batch_size
       scores = self.model.loss(X[start:end])
+      scores = scores.reshape(num_batches, 3, 32, 32)
       y_pred.append(np.argmax(scores, axis=1))
     y_pred = np.hstack(y_pred)
     acc = np.mean(y_pred == y)
