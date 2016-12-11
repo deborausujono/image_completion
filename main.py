@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import theano
 import theano.tensor as T
@@ -211,6 +212,10 @@ def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed,
     #test(data['X_test'])
 
 if __name__ == '__main__':
+    if len(sys.argv) < 2:
+        print 'Usage: python main.py use_small_data'
+        sys.exit()
+
     min_seq_len = 5
     max_seq_len = 31
     H = 32
@@ -218,7 +223,7 @@ if __name__ == '__main__':
     num_channels = 3
     images_per_batch = 20
     seed = None
-    use_small_data = True
+    use_small_data = bool(int(sys.argv[1]))
 
     main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed,
          use_small_data)
