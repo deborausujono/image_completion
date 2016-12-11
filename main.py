@@ -36,6 +36,7 @@ def load_data(small_data=False, verbose=False):
         X_test (1000, 32, 32, 4)
         y_test (1000, 32, 32, 3)
     """
+    print 'Loading data'
     data = get_CIFAR10_data(mode=1)
     if small_data:
         num_train = 100
@@ -54,10 +55,10 @@ def load_data(small_data=False, verbose=False):
 
 def make_minibatch(X_train, y_train, batch_size):
     # Make a minibatch of training data
-    num_train = self.X_train.shape[0]
-    batch_mask = np.random.choice(num_train, self.batch_size)
-    X_batch = self.X_train[batch_mask]
-    y_batch = self.y_train[batch_mask]
+    num_train = X_train.shape[0]
+    batch_mask = np.random.choice(num_train, batch_size)
+    X_batch = X_train[batch_mask]
+    y_batch = y_train[batch_mask]
 
     return X_batch, y_batch
 
@@ -123,6 +124,7 @@ def test_one(img, predict):
     img = img[:, :, :-1] * mask
 
     assert np.all(img[missing_start:missing_end, missing_start:missing_end, :] == 0)
+    print img[missing_start:missing_end, missing_start:missing_end, :]
 
     """
     predict() needs X of shape (num_data, max_seq_len, num_features)
@@ -132,12 +134,13 @@ def test_one(img, predict):
     seq = seq.reshape(missing_start, W * num_channels)
     new_px = predict(X, X_mask)
 
-def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed):
+def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed,
+         use_small_data):
     # Set seed for reproducibility if provided
     if seed is not None:
         lasagne.random.set_rng(np.random.RandomState(1))
 
-    data = load_data(small_data=True, verbose=True)
+    data = load_data(small_data=use_small_data, verbose=True)
 
     # Define network
     print 'Compiling network'
@@ -162,7 +165,7 @@ def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed):
 
     # Output layer
     l_out = lasagne.layers.DenseLayer(l_forward2, num_units=num_features,
-        W = lasagne.init.Normal(), nonlinearity=lasagne.nonlinearities.relu)
+        W = lasagne.init.Normal(), nonlinearity=lasagne.nonlinearities.rectify)
 
     # Matrix of target pixels (batch_size, num_features)
     target_output = T.imatrix('target_output')
@@ -175,7 +178,7 @@ def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed):
 
     # Compute gradients
     params = lasagne.layers.get_all_params(l_out)
-    updates = lasagne.updates.rmsprop(cost, params, LEARNING_RATE)
+    updates = lasagne.updates.rmsprop(loss, params, LEARNING_RATE)
 
     # Define Theano helper functions
     print 'Compiling functions'
@@ -214,6 +217,8 @@ if __name__ == '__main__':
     W = 32
     num_channels = 3
     images_per_batch = 20
-    seed = 1
+    seed = None
+    use_small_data = True
 
-    main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed)
+    main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed,
+         use_small_data)
