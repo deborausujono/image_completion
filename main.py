@@ -202,7 +202,7 @@ def main(min_seq_len, max_seq_len, H, W, num_channels, images_per_batch, seed,
             
             X, X_mask, y = data_feeder(data, images_per_batch, min_seq_len, max_seq_len)
             new_loss = train(X, X_mask, y)
-            print 'Epoch {} loss = {}'.format(itr * batch_size / num_train, new_loss)
+            print 'Epoch {} loss = {}'.format(itr * images_per_batch / num_train, new_loss)
                     
     except KeyboardInterrupt:
         pass
